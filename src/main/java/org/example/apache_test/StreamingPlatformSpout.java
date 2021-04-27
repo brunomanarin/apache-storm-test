@@ -12,7 +12,7 @@ import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Values;
 
-public class WordReaderSpout implements IRichSpout {
+public class StreamingPlatformSpout implements IRichSpout {
 
  /**
   * 
@@ -26,7 +26,7 @@ public class WordReaderSpout implements IRichSpout {
 
  public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
   try {
-	this.fileReader = new FileReader("C:\\Users\\bruno\\OneDrive\\Área de Trabalho\\tv_shows.csv");  
+	this.fileReader = new FileReader(conf.get("inputFile").toString());  
   } catch (FileNotFoundException e) {
 	  throw new RuntimeException("Error reading file");
   }
@@ -80,7 +80,7 @@ public class WordReaderSpout implements IRichSpout {
  }
 
  public void declareOutputFields(OutputFieldsDeclarer declarer) {
-  declarer.declare(new Fields("word"));
+  declarer.declare(new Fields("csvRow"));
 
  }
 
